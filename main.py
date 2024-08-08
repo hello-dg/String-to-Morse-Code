@@ -11,15 +11,20 @@ pygame.mixer.init()
 
 # Sound path, play function, and time delay are kept in functions to easily make changes to path or time should the
 # code expand in the future.
+
+# Learned that the print function has an end parameter that is by default set to \n for a new line.
+# I updated this end parameter so the morse code would print on the same line as its played.
 def play_dot_sound():
     dot_sound = pygame.mixer.Sound('assets/sounds/dot.wav')
     dot_sound.play()
+    print(".", end='')
     time.sleep(.25)
 
 
 def play_dash_sound():
     dash_sound = pygame.mixer.Sound('assets/sounds/dash.wav')
     dash_sound.play()
+    print("_", end='')
     time.sleep(.25)
 
 
@@ -46,9 +51,11 @@ morse_code = ""
 
 # While loop created to give user another try and converting text to morse code should they enter a symbol that
 # cannot be converted to morse code.
-valid_input = True
-while valid_input:
+converter_on = True
+while converter_on:
     word = input("What word or phrase do you need converted to morse code? ").lower()
+    print("\nHere is your morse code:")
+    time.sleep(.5)
     try:
         i = 0
         for letter in word:
@@ -59,14 +66,18 @@ while valid_input:
                 else:
                     play_dash_sound()
                 morse_code += signal
+            print(" ", end='')
             if i < len(word): # Ensures there is not an unnecessary space at the end of the conversion.
                 time.sleep(.25)
                 morse_code += " "
-        valid_input = False
+
     except KeyError:
         print("\nMorse code has no signal for one or more of your inputted symbols. Please try again.\n")
         time.sleep(1.5)
 
-pygame.quit()
+    convert_again = input("\n\nWould you like to convert another word or phrase? Type Yes or No: ").lower()
+    print("")
+    if convert_again == "no":
+        converter_on = False
 
-print(f"The printed version of the morse code you heard was: {morse_code}")
+pygame.quit()
