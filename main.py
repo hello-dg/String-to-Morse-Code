@@ -59,7 +59,7 @@ while valid_input:
                 else:
                     play_dash_sound()
                 morse_code += signal
-            if i < len(word): # Ensures there is not an unneccessary space at the end of the conversion.
+            if i < len(word): # Ensures there is not an unnecessary space at the end of the conversion.
                 time.sleep(.25)
                 morse_code += " "
         valid_input = False
